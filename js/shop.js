@@ -83,7 +83,9 @@ function buy(id) {
             cartList.push(products[x]);
         }
     } 
-    // console.log(cartList);
+    console.log(cartList);
+
+    calculateTotal();
 }
 
 // Exercise 2
@@ -93,13 +95,23 @@ function cleanCart() {
        cartList.pop();
     } while (cartList.length = 0);
     
-    // console.log(cartList);
+    console.log(cartList);
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-}
+
+    let totalPrice = 0;
+    let x;
+
+    for ( x = 0; x < cartList.length; x++ ){
+        totalPrice = totalPrice + cartList[x].price
+        }
+    
+    console.log(totalPrice);
+
+    }
 
 // Exercise 4
 function generateCart() {
