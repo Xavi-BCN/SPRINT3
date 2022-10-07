@@ -78,16 +78,22 @@ function buy(id) {
 
     let x;
 
-    for ( x = 0; x < products.length-1; x++ ){
-        if (products[x].id=== id){
+    for ( x = 0; x < products.length; x++ ){
+        if (products[x].id == id){
             cartList.push(products[x]);
         }
     } 
+    // console.log(cartList);
 }
 
 // Exercise 2
 function cleanCart() {
-
+        
+    do{
+       cartList.pop();
+    } while (cartList.length = 0);
+    
+    // console.log(cartList);
 }
 
 // Exercise 3
