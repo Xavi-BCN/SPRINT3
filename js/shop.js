@@ -129,19 +129,31 @@ function generateCart(cartList) {
         if (result == -1){
     
             cartList[i].quantity = 1;
+            cartList[i].subtotal = cartList[i].price;
             cart.push(cartList[i]);
+            
     
         }else if (result => 0){
     
             cart[result].quantity += unitats; 
+            cart[result].subtotal = cart[result].quantity * cart[result].price;
         }
+        
     }
-    //console.log(cart);    
+    // console.log(cart);    
 }
 
 // Exercise 5
-function applyPromotionsCart() {
+function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
+
+    
+    
+    
+    
+    //console.log(cart);
+
+
 }
 
 // Exercise 6
