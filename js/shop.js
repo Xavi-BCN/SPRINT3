@@ -93,7 +93,7 @@ function cleanCart() {
        cartList.pop();
     } while (cartList.length = 0);
     
-    console.log(cartList);
+    // console.log(cartList);
 }
 
 // Exercise 3
@@ -140,18 +140,34 @@ function generateCart(cartList) {
         }
         
     }
-    // console.log(cart);    
+    // console.log(cart);
+    applyPromotionsCart(cart)    
 }
 
 // Exercise 5
 function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
-
+    cart.forEach(item => {
+        
+        if (item.id == 1){
+            if(item.quantity >= 3){
+                item.subtotalWithDiscount= item.quantity * 10;
+                alert(`Estoy en el aceite ${item.id} y tengo ${item.quantity}
+                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`);
+            }
+        }else if(item.id == 3){
+            if(item.quantity >= 10){
+                item.subtotalWithDiscount= Number.parseFloat(item.quantity * ((5/3)*2)).toFixed(2);
+                alert(`Estoy en ls mezcla de pastel ${item.id} y tengo ${item.quantity}
+                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`);
+            }
+        }else{
+            item.subtotalWithDiscount=0;
+        }
+    });
     
     
-    
-    
-    //console.log(cart);
+    console.log(cart);
 
 
 }
