@@ -173,8 +173,36 @@ function applyPromotionsCart(cart) {
 }
 
 // Exercise 6
-function printCart() {
+function printCart(cart) {
     // Fill the shopping cart modal manipulating the shopping cart dom
+
+    let tableList = document.getElementById("cart-list");
+   
+    cart.forEach(item => {
+        let  row = document.createElement('tr');
+        
+        let th = document.createElement('th');
+        th.innerText = item.name;
+        row.appendChild(th);
+        
+        td = document.createElement('td');
+        td.innerText = item.price;
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.innerText = item.quantity;
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.innerText = item.subtotalWithDiscount;
+        row.appendChild(td);     
+
+        tableList.appendChild(row)
+
+    });
+
+    
+
 }
 
 
