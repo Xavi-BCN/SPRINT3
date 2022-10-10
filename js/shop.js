@@ -2,7 +2,7 @@
 var products = [
    {
         id: 1,
-        name: 'cooking oil',
+        name: 'Cooking oil',
         price: 10.5,
         type: 'grocery',
         offer: {
@@ -75,9 +75,7 @@ let total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
-
     let x;
-
     for ( x = 0; x < products.length; x++ ){
         if (products[x].id == id){
             cartList.push(products[x]);
@@ -88,27 +86,35 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
+    do{
+       cart.pop();
+    } while (cart.length = 0);
+    
+   cleanCartList();
+
+
+    // console.log(cart);
+    // location.reload();  
+    console.log("Open Modal");
+}
+
+function cleanCartList() {
         
     do{
-       cartList.pop();
-    } while (cartList.length = 0);
-    
-    // console.log(cartList);
+        cartList.pop();
+     } while (cartList.length = 0);
 }
+
+
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-
     let x;
-    
-
     for ( x = 0; x < cartList.length; x++ ){
         total +=  cartList[x].price
-        }
-    
-    //console.log(total);
-        
+    }
+    //console.log(total);    
 }
 
 // Exercise 4
@@ -116,29 +122,21 @@ function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
     calculateTotal();
-
     let i = 0;
     let unitats = 1;
     let result;
 
     for (i ; i < cartList.length; i++){
-
         result = cart.findIndex(item => item.id == cartList[i].id);
         //console.log(result)
-
         if (result == -1){
-    
             cartList[i].quantity = 1;
             cartList[i].subtotal = cartList[i].price;
             cart.push(cartList[i]);
-            
-    
         }else if (result => 0){
-    
             cart[result].quantity += unitats; 
             cart[result].subtotal = cart[result].quantity * cart[result].price;
         }
-        
     }
     // console.log(cart);
     applyPromotionsCart(cart)    
@@ -148,42 +146,41 @@ function generateCart(cartList) {
 function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
     cart.forEach(item => {
-        
         if (item.id == 1){
             if(item.quantity >= 3){
                 item.subtotalWithDiscount= item.quantity * 10;
-                alert(`Estoy en el aceite ${item.id} y tengo ${item.quantity}
-                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`);
+                /* alert(`Estoy en el aceite ${item.id} y tengo ${item.quantity}
+                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`); */
             }
         }else if(item.id == 3){
             if(item.quantity >= 10){
                 item.subtotalWithDiscount= Number.parseFloat(item.quantity * ((5/3)*2)).toFixed(2);
-                alert(`Estoy en ls mezcla de pastel ${item.id} y tengo ${item.quantity}
-                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`);
+                /* alert(`Estoy en ls mezcla de pastel ${item.id} y tengo ${item.quantity}
+                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`); */
             }
         }else{
             item.subtotalWithDiscount=0;
         }
     });
-    
-    
     console.log(cart);
-
-
 }
 
 // Exercise 6
 function printCart(cart) {
     // Fill the shopping cart modal manipulating the shopping cart dom
 
-    let tableList = document.getElementById("cart-list");
-   
+    /*  Crear nodos a utlilizar */
+    // const th = document.createElement('th');
+    // const td = document.createElement('td');
+    /* Selecionar elemento padre del cual van a colgar los nodos  */
+    let bodyTable = document.getElementById("cart_list");
+    
     cart.forEach(item => {
-        let  row = document.createElement('tr');
+        let row = document.createElement('tr');    
         
-        let th = document.createElement('th');
-        th.innerText = item.name;
-        row.appendChild(th);
+        let td = document.createElement('td');
+        td.innerHTML = `<b>${item.name}</b>`;
+        row.appendChild(td);
         
         td = document.createElement('td');
         td.innerText = item.price;
@@ -194,17 +191,13 @@ function printCart(cart) {
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.innerText = item.subtotalWithDiscount;
+        td.innerText = item.subtotal;
         row.appendChild(td);     
 
-        tableList.appendChild(row)
-
+        bodyTable.appendChild(row)
     });
-
-    
-
+    document.getElementById("total_price").innerText = total
 }
-
 
 // ** Nivell II **
 
@@ -222,6 +215,12 @@ function removeFromCart(id) {
 }
 
 function open_modal(){
-	console.log("Open Modal");
-	printCart();
+	
+    console.log("Open Modal");
+	generateCart(cartList);
+    printCart(cart);
+    cleanCartList();
+       
+       
+      
 }
