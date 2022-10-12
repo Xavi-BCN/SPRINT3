@@ -1,6 +1,4 @@
 function main(){
-    console.log("Elementos selecionados")
-    console.log(cartList)
     open_modal();
     calculateTotal();
     generateCart(cartList);
@@ -78,56 +76,76 @@ const cartList = [];
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
-
 let total = 0;
+let totalDiscount = 0;
+let existDiscount = false;
+let thingInCart = 0;
 
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
-    let x;
-    for ( x = 0; x < products.length; x++ ){
-        if (products[x].id == id){
-            cartList.push(products[x]);
+    let i;
+    for ( i = 0; i < products.length; i++ ){
+        if (products[i].id == id){
+            cartList.push(products[i]);
+            thingInCart += 1;
         }
-    } 
-    console.log("Elementos selecionados")
-    console.log(cartList);
+    }
+    document.getElementById("count_product").innerText = thingInCart;
 }
-
 // Exercise 2
 function cleanCart() {
     do{
        cart.pop();
     } while (cart.length = 0);
-    
+    total = 0;
+    cleanCartList();
+    totalDiscount = 0;
+    existDiscount = false;
+    thingInCart = 0;
+    document.getElementById("count_product").innerText = thingInCart;
+    cleanPrintCard();
 }
 
-function cleanCartList() {
-        
+function cleanCartList() {   
     do{
         cartList.pop();
      } while (cartList.length = 0);
 }
 
-
-
+function cleanPrintCard(){
+    document.getElementById("total_price").innerHTML = "0";
+    document.getElementById("cart_list").innerHTML = " ";
+    cleanCartList(); 
+}
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     let x;
     for ( x = 0; x < cartList.length; x++ ){
         total +=  cartList[x].price
-    }
-    console.log(total);    
+    }    
+}
+
+function calculateTotalWithDiscount(){
+
+    totalDiscount = 0;
+
+    cart.forEach(item => {
+        if(item.subtotalWithDiscount != 0){
+            totalDiscount += item.subtotalWithDiscount;
+        }else{
+            totalDiscount += item.subtotal;
+        }
+    });
+    totalDiscount = Number.parseFloat(totalDiscount).toFixed(2);
 }
 
 // Exercise 4
 function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-    
-    
     let i = 0;
     let unitats = 1;
     let result;
@@ -142,47 +160,43 @@ function generateCart(cartList) {
             cart[result].quantity += unitats; 
             cart[result].subtotal = cart[result].quantity * cart[result].price;
         }
-    }
-    // console.log(cart);    
+    } 
+    console.log(cart);   
 }
-
 // Exercise 5
 function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
-    totalDiscount = 0;
-    existDiscount = false;
     cart.forEach(item => {
         if (item.id == 1){
             if(item.quantity >= 3){
                 item.subtotalWithDiscount= item.quantity * 10;
+                existDiscount = true;
+            }
+            else if(item.quantity < 3){
+                item.subtotalWithDiscount = 0;
             }
         }else if(item.id == 3){
             if(item.quantity >= 10){
-                item.subtotalWithDiscount= Number.parseFloat(item.quantity * ((5/3)*2)).toFixed(2);
+                let swd = item.quantity * (5 * 0.66);
+                item.subtotalWithDiscount= Number(parseFloat(swd).toFixed(3));
+                existDiscount = true;
+            }
+            else if(item.quantity < 10){
+                item.subtotalWithDiscount = 0;
             }
         }else{
-            item.subtotalWithDiscount=0;
-        }
-
-        if(item.subtotalWithDiscount == 0){
-            total += item.subtotal;
-        }else if(item.subtotalWithDiscount > 0){
-            total += item.subtotalWithDiscount
-            existDiscount = true;
+            item.subtotalWithDiscount = 0;
         }
     });
+    if (existDiscount) calculateTotalWithDiscount();
 }
 
 // Exercise 6
 function printCart(cart) {
     // Fill the shopping cart modal manipulating the shopping cart dom
-
-    /*  Crear nodos a utlilizar */
-    // const th = document.createElement('th');
-    // const td = document.createElement('td');
-    /* Selecionar elemento padre del cual van a colgar los nodos  */
+    cleanPrintCard();
     let bodyTable = document.getElementById("cart_list");
-    
+
     cart.forEach(item => {
         let row = document.createElement('tr');    
         
@@ -190,9 +204,8 @@ function printCart(cart) {
         td.innerHTML = `<b>${item.name}</b>`;
         row.appendChild(td);
         
-    
         td = document.createElement('td');
-        td.innerText = item.price;
+        td.innerText = "$" + item.price;
         row.appendChild(td);
 
         td = document.createElement('td');
@@ -200,12 +213,20 @@ function printCart(cart) {
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.innerText = item.subtotal;
+        if(item.subtotalWithDiscount > 0){
+            td.innerText = "$" + item.subtotalWithDiscount + " *";
+        }else{
+            td.innerText = "$" + item.subtotal;
+        }
         row.appendChild(td);     
-
         bodyTable.appendChild(row)
     });
-    document.getElementById("total_price").innerText = total
+
+    if (existDiscount){
+        document.getElementById("total_price").innerHTML =  totalDiscount + '<small> *Discount aplicated </small>';
+    }else{
+        document.getElementById("total_price").innerText = total;
+    };
 }
 
 // ** Nivell II **
