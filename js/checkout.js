@@ -1,5 +1,13 @@
 
 // Exercise 6
+const regularExpressions = {
+	
+	regFnameLname: /^[A-z\_\-]{3,12}$/,
+	regEmail: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+\[a-zA-Z0-9-.]+$/,
+	regPhone: /^\d{3,14}$/,
+	regPassword: /^[a-zA-Z0-9]{3,12}$/
+}
+
 function validate() {
 	var error = 0;
 	// Get the input fields
