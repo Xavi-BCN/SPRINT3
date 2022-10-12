@@ -1,3 +1,13 @@
+function main(){
+    console.log("Elementos selecionados")
+    console.log(cartList)
+    open_modal();
+    calculateTotal();
+    generateCart(cartList);
+    applyPromotionsCart(cart);
+    printCart(cart);
+}
+
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
 var products = [
    {
@@ -81,7 +91,8 @@ function buy(id) {
             cartList.push(products[x]);
         }
     } 
-    //console.log(cartList);
+    console.log("Elementos selecionados")
+    console.log(cartList);
 }
 
 // Exercise 2
@@ -90,12 +101,6 @@ function cleanCart() {
        cart.pop();
     } while (cart.length = 0);
     
-   cleanCartList();
-
-
-    // console.log(cart);
-    // location.reload();  
-    console.log("Open Modal");
 }
 
 function cleanCartList() {
@@ -114,21 +119,21 @@ function calculateTotal() {
     for ( x = 0; x < cartList.length; x++ ){
         total +=  cartList[x].price
     }
-    //console.log(total);    
+    console.log(total);    
 }
 
 // Exercise 4
 function generateCart(cartList) {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-    calculateTotal();
+    
+    
     let i = 0;
     let unitats = 1;
     let result;
 
     for (i ; i < cartList.length; i++){
         result = cart.findIndex(item => item.id == cartList[i].id);
-        //console.log(result)
         if (result == -1){
             cartList[i].quantity = 1;
             cartList[i].subtotal = cartList[i].price;
@@ -138,31 +143,34 @@ function generateCart(cartList) {
             cart[result].subtotal = cart[result].quantity * cart[result].price;
         }
     }
-    // console.log(cart);
-    applyPromotionsCart(cart)    
+    // console.log(cart);    
 }
 
 // Exercise 5
 function applyPromotionsCart(cart) {
     // Apply promotions to each item in the array "cart"
+    totalDiscount = 0;
+    existDiscount = false;
     cart.forEach(item => {
         if (item.id == 1){
             if(item.quantity >= 3){
                 item.subtotalWithDiscount= item.quantity * 10;
-                /* alert(`Estoy en el aceite ${item.id} y tengo ${item.quantity}
-                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`); */
             }
         }else if(item.id == 3){
             if(item.quantity >= 10){
                 item.subtotalWithDiscount= Number.parseFloat(item.quantity * ((5/3)*2)).toFixed(2);
-                /* alert(`Estoy en ls mezcla de pastel ${item.id} y tengo ${item.quantity}
-                precio con descuento ${item.subtotalWithDiscount} y el precio sin descuento es ${item.subtotal}`); */
             }
         }else{
             item.subtotalWithDiscount=0;
         }
+
+        if(item.subtotalWithDiscount == 0){
+            total += item.subtotal;
+        }else if(item.subtotalWithDiscount > 0){
+            total += item.subtotalWithDiscount
+            existDiscount = true;
+        }
     });
-    console.log(cart);
 }
 
 // Exercise 6
@@ -182,6 +190,7 @@ function printCart(cart) {
         td.innerHTML = `<b>${item.name}</b>`;
         row.appendChild(td);
         
+    
         td = document.createElement('td');
         td.innerText = item.price;
         row.appendChild(td);
@@ -217,10 +226,6 @@ function removeFromCart(id) {
 function open_modal(){
 	
     console.log("Open Modal");
-	generateCart(cartList);
-    printCart(cart);
-    cleanCartList();
-       
-       
-      
+
 }
+    
