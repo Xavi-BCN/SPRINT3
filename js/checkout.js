@@ -1,4 +1,8 @@
 // Exercise 6
+const formulary =document.getElementById("form-checkout");
+const inputs = document.querySelectorAll("#form-checkout input");
+let isEmpty = 6;
+
 const regularExpressions = {
 
 	regFnameLname: /^[A-z\_\-]{3,12}$/,
@@ -8,7 +12,97 @@ const regularExpressions = {
 	regdAdress: /^[a-zA-Z0-9]{3,100}$/
 }
 
-function validate() {
+const validate = (element) => {
+	switch (element.target.name){
+		case "fName":
+			if (regularExpressions.regFnameLname.test(fName.value)) {
+				fName.classList.remove("is-invalid")
+				fName.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fName.classList.remove("is-valid")
+				fName.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+		case "fLastN":
+			if (regularExpressions.regFnameLname.test(fLastN.value)) {
+				fLastN.classList.remove("is-invalid")
+				fLastN.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fLastN.classList.remove("is-valid")
+				fLastN.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+		case "fEmail":
+			if (regularExpressions.regEmail.test(fEmail.value)) {
+				fEmail.classList.remove("is-invalid")
+				fEmail.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fEmail.classList.remove("is-valid")
+				fEmail.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+		case "fPassword":
+			if (regularExpressions.regPassword.test(fPassword.value)) {
+				fPassword.classList.remove("is-invalid")
+				fPassword.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fPassword.classList.remove("is-valid")
+				fPassword.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+		case "fAddress":
+			if (regularExpressions.regdAdress.test(fAddress.value)) {
+				fAddress.classList.remove("is-invalid")
+				fAddress.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fAddress.classList.remove("is-valid")
+				fAddress.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+		case "fPhone":
+			if (regularExpressions.regPhone.test(fPhone.value)) {
+				fPhone.classList.remove("is-invalid")
+				fPhone.classList.add("is-valid")
+				isEmpty--;
+			} else {
+				fPhone.classList.remove("is-valid")
+				fPhone.classList.add("is-invalid");
+				isEmpty++ ;
+			}
+		break;
+	}
+}
+
+inputs.forEach((input) => {
+	input.addEventListener("keyup", validate);
+	input.addEventListener("blur", validate);
+});
+
+formulary.addEventListener("button", (element) => {
+	element.preventDefault;
+});
+
+function checkEmpty(){
+	if(isEmpty > 0){
+		alert("Campos vacios")
+	}else if(isEmpty = 0){
+		alert("Campos OK")
+	};
+}
+
+// NO USE NOW validate function - it's old version code
+
+function validateold() {
 	let error = 0;
 	// Get the input fields
 	let fName = document.getElementById("fName");
@@ -17,7 +111,6 @@ function validate() {
 	let fPassword = document.getElementById("fPassword");
 	let fAddress = document.getElementById("fAddress");
 	let fPhone = document.getElementById("fPhone");
-
 
 
 	// Get the error elements
@@ -49,6 +142,7 @@ function validate() {
 			lName.classList.add("is-valid");
 		} else {
 			lName.classList.add("is-invalid");
+			lName.focus;
 		}
 	}
 	/* Validate fEmail */
@@ -96,13 +190,12 @@ function validate() {
 		}
 	}
 
-
-	if (error > 0) {
+	/* if (error > 0) {
 		
 		alert(`You have ${error} blanck inputs. Please carrect these inputs`);
 
 	} else {
 		alert("Perfect, form is correct. You can continue");
-	}
+	} */
 
 }
