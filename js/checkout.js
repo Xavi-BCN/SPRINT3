@@ -1,10 +1,7 @@
 // Exercise 6
 const formulary =document.getElementById("form-checkout");
 const inputs = document.querySelectorAll("#form-checkout input");
-let isEmpty = 6;
-
 const regularExpressions = {
-
 	regFnameLname: /^[A-z\_\-]{3,12}$/,
 	regEmail: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 	regPhone: /^\d{3,14}$/,
@@ -12,77 +9,68 @@ const regularExpressions = {
 	regdAdress: /^[a-zA-Z0-9]{3,100}$/
 }
 
+// Validate field with regular expressions
 const validate = (element) => {
+	noValidField = 0;
 	switch (element.target.name){
 		case "fName":
 			if (regularExpressions.regFnameLname.test(fName.value)) {
-				fName.classList.remove("is-invalid")
-				fName.classList.add("is-valid")
-				isEmpty--;
+				fName.classList.remove("is-invalid");
+				fName.classList.add("is-valid");
 			} else {
-				fName.classList.remove("is-valid")
+				fName.classList.remove("is-valid");
 				fName.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 		case "fLastN":
 			if (regularExpressions.regFnameLname.test(fLastN.value)) {
-				fLastN.classList.remove("is-invalid")
-				fLastN.classList.add("is-valid")
-				isEmpty--;
+				fLastN.classList.remove("is-invalid");
+				fLastN.classList.add("is-valid");
 			} else {
-				fLastN.classList.remove("is-valid")
+				fLastN.classList.remove("is-valid");
 				fLastN.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 		case "fEmail":
 			if (regularExpressions.regEmail.test(fEmail.value)) {
-				fEmail.classList.remove("is-invalid")
-				fEmail.classList.add("is-valid")
-				isEmpty--;
+				fEmail.classList.remove("is-invalid");
+				fEmail.classList.add("is-valid");
 			} else {
-				fEmail.classList.remove("is-valid")
+				fEmail.classList.remove("is-valid");
 				fEmail.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 		case "fPassword":
 			if (regularExpressions.regPassword.test(fPassword.value)) {
-				fPassword.classList.remove("is-invalid")
-				fPassword.classList.add("is-valid")
-				isEmpty--;
-			} else {
-				fPassword.classList.remove("is-valid")
+				fPassword.classList.remove("is-invalid");
+				fPassword.classList.add("is-valid");
+				} else {
+				fPassword.classList.remove("is-valid");
 				fPassword.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 		case "fAddress":
 			if (regularExpressions.regdAdress.test(fAddress.value)) {
-				fAddress.classList.remove("is-invalid")
-				fAddress.classList.add("is-valid")
-				isEmpty--;
-			} else {
-				fAddress.classList.remove("is-valid")
+				fAddress.classList.remove("is-invalid");
+				fAddress.classList.add("is-valid");
+				} else {
+				fAddress.classList.remove("is-valid");
 				fAddress.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 		case "fPhone":
 			if (regularExpressions.regPhone.test(fPhone.value)) {
-				fPhone.classList.remove("is-invalid")
-				fPhone.classList.add("is-valid")
-				isEmpty--;
-			} else {
-				fPhone.classList.remove("is-valid")
+				fPhone.classList.remove("is-invalid");
+				fPhone.classList.add("is-valid");
+				} else {
+				fPhone.classList.remove("is-valid");
 				fPhone.classList.add("is-invalid");
-				isEmpty++ ;
 			}
 		break;
 	}
 }
 
+// It waits for events in the fields and sends them to the "validate" function
 inputs.forEach((input) => {
 	input.addEventListener("keyup", validate);
 	input.addEventListener("blur", validate);
@@ -92,17 +80,27 @@ formulary.addEventListener("button", (element) => {
 	element.preventDefault;
 });
 
+// Verify form (empty and valid inputs) with button SAVE
 function checkEmpty(){
-	if(isEmpty > 0){
-		alert("Campos vacios")
-	}else if(isEmpty = 0){
-		alert("Campos OK")
+	let error = 0;
+	let noValidField = 0;
+	let isfieldNotWrite ;
+	inputs.forEach((input) => {
+		isfieldNotWrite = input.value;
+		isfieldNotWrite == "" ? error++ : console.log("Field contain data");
+		input.classList.contains('is-invalid') ? noValidField++ : console.log("Correct field"); 
+		});
+	
+	if (error > 0 || noValidField > 0){
+		alert("Some field is empty or contain some error");
+	}else if(error == 0 && noValidField == 0){
+		alert("The form is correct, thank's. Now return to home page");
+		window.location.href="http://127.0.0.1:5500/SPRINT3/index.html";
 	};
 }
 
-// NO USE NOW validate function - it's old version code
-
-function validateold() {
+//******* NO USED:  it's old version code *****
+function validateOld() {
 	let error = 0;
 	// Get the input fields
 	let fName = document.getElementById("fName");
@@ -124,7 +122,7 @@ function validateold() {
 	// Validate fields entered by the user: name, phone, password, and email
 	/* Validate fName */
 	if (fName.value == "") {
-		error++;
+		
 		fName.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regFnameLname.test(fName.value)) {
@@ -135,7 +133,7 @@ function validateold() {
 	}
 	/* Validate lName */
 	if (lName.value == "") {
-		error++;
+		
 		lName.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regFnameLname.test(lName.value)) {
@@ -147,7 +145,7 @@ function validateold() {
 	}
 	/* Validate fEmail */
 	if (fEmail.value == "") {
-		error++;
+		
 		fEmail.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regEmail.test(fEmail.value)) {
@@ -158,7 +156,7 @@ function validateold() {
 	}
 	/* Validate fPassword */
 	if (fPassword.value == "") {
-		error++;
+		
 		fPassword.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regPassword.test(fPassword.value)) {
@@ -169,7 +167,7 @@ function validateold() {
 	}
 	/* Validate fAddress */
 	if (fAddress.value == "") {
-		error++;
+		
 		fAddress.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regdAdress.test(fAddress.value)) {
@@ -180,7 +178,6 @@ function validateold() {
 	}
 	/* Validate fPhone */
 	if (fPhone.value == "") {
-		error++;
 		fPhone.classList.add("is-invalid");
 	} else {
 		if (regularExpressions.regPhone.test(fPhone.value)) {
@@ -190,12 +187,12 @@ function validateold() {
 		}
 	}
 
-	/* if (error > 0) {
+	if (error > 0) {
 		
 		alert(`You have ${error} blanck inputs. Please carrect these inputs`);
 
 	} else {
 		alert("Perfect, form is correct. You can continue");
-	} */
+	} 
 
 }
