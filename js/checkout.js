@@ -76,7 +76,7 @@ inputs.forEach((input) => {
 	input.addEventListener("blur", validate);
 });
 
-formulary.addEventListener("button", (element) => {
+ formulary.addEventListener("button", (element) => {
 	element.preventDefault;
 });
 

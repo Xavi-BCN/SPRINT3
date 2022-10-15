@@ -1,7 +1,7 @@
 function main(){
     open_modal();
     calculateTotal();
-    generateCart(cartList);
+    // generateCart(cartList);
     applyPromotionsCart(cart);
     printCart(cart);
 }
@@ -121,11 +121,20 @@ function cleanPrintCard(){
 }
 // Exercise 3
 function calculateTotal() {
-    // Calculate total price of the cart using the "cartList" array
-    let x;
+    // Calculate total price of the cart using the "cartList" array 
+    // Here Level 1
+    /* let x;
     for ( x = 0; x < cartList.length; x++ ){
         total +=  cartList[x].price
-    }    
+    } */    
+
+    // Here Level 2
+    total = 0;
+    cart.forEach(element => {
+        total += element.subtotal
+    });
+
+
 }
 
 function calculateTotalWithDiscount(){
@@ -231,14 +240,31 @@ function printCart(cart) {
 
 // ** Nivell II **
 
-// Exercise 7
+// Exercise 8
 function addToCart(id) {
     // Refactor previous code in order to simplify it 
+    let productPosition = 0;
+    let cartPosition = 0;
+    let unitats = 1;
     // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    productPosition =  products.findIndex(element => element.id == id);
+     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    cartPosition = cart.findIndex(element => element.id == id);
+    
+    if (cartPosition == -1){
+        cart.push(products[productPosition]);
+        cart[cart.length-1].quantity = unitats;
+        cart[cart.length-1].subtotal = cart[cart.length-1].price * cart[cart.length-1].quantity
+        thingInCart++;
+    }else{
+        cart[cartPosition].quantity += unitats;
+        cart[cartPosition].subtotal = cart[cartPosition].price * cart[cartPosition].quantity
+        thingInCart++;
+    }
+    document.getElementById("count_product").innerText = thingInCart;
 }
 
-// Exercise 8
+// Exercise 9
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
