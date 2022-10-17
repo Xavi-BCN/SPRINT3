@@ -248,7 +248,7 @@ function addToCart(id) {
     cartPosition = cart.findIndex(element => element.id == id);
 
     if (cartPosition == -1) {
-        cart.push(products[productPosition]);
+        cart.push({...products[productPosition]});
         cart[cart.length - 1].quantity = unitats;
         cart[cart.length - 1].subtotal = cart[cart.length - 1].price * cart[cart.length - 1].quantity
         thingInCart++;
