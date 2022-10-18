@@ -1,3 +1,8 @@
+let arrayRecojido = JSON.parse(localStorage.getItem("listaCompra"));
+console.log(arrayRecojido);
+// localStorage.removeItem("listaCompra");
+// console.log(arrayRecojido);
+
 // Exercise 6
 const formulary =document.getElementById("form-checkout");
 const inputs = document.querySelectorAll("#form-checkout input");

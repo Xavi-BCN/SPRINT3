@@ -194,6 +194,7 @@ function applyPromotionsCart(cart) {
         }
     });
     if (existDiscount) calculateTotalWithDiscount();
+    localStorage.setItem("listaCompra", JSON.stringify(cart));
 }
 
 // Exercise 6
